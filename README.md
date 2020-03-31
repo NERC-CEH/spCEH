@@ -1,89 +1,113 @@
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Travis-CI Build Status](https://travis-ci.org/cboettig/template.svg?branch=master)](https://travis-ci.org/cboettig/template) [![Coverage Status](https://coveralls.io/repos/cboettig/template/badge.svg)](https://coveralls.io/r/cboettig/template)
+---
+title: "spCEH - spatial utility functions and data from CEH Edinburgh"
+author: "Peter Levy"
+date: "2020-03-31"
+#output: rmarkdown::html_vignette
+output:
+  html_document:
+    keep_md: yes
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
 
-This repository provides the current template I use for new research projects.
 
-Why an R package structure?
----------------------------
+	
+`spCEH` is an attempt to gather together some common functions and spatial data from CEH Edinburgh.
+The idea is to standardise where possible such things as UK coastline data, topography data, raster grids for the UK (& Scotland, ...).
+We share these in an easily accessible and updateable way by building them into an R package on GitHub. 
 
-Academic research isn't software development, and there are many other templates for how to organize a research project. So why follow an R package layout? Simply put, this is because the layout of an R package is familiar to a larger audience and allows me to leverage a rich array of tools that don't exist for more custom approaches.
+## Data
+So far, data sets include:
 
-"But"", you say, "a paper doesn't have unit tests, or documented functions! Surely that's a lot of needless overhead in doing this!?"
+- UK coastline polygons
 
-Exactly...
 
-While there is certainly no need to use all the elements of a package in every research project, or even to have a package that can pass `devtools::check()` or even `devtools::install()` for it to be useful. Most generic layout advice starts sounding like an R package pretty quickly: have a directory for `data/`, a separate one for `R/` scripts, another one for the manuscript files, and so forth. [Temple Lang and Gentleman (2007)]( "http://doi.org/10.1198/106186007X178663") advance the proposal for using the R package structure as a "Research Compendium," an idea that has since caught on with many others.
+## Functions
+So far, the package includes functions for:
 
-As a project grows in size and collaboration, having the more rigid structure offered by a package format becomes increasingly valuable. Packages can automate installation of dependencies, perform checks that changes have not broken code, and provide a modular and highly tested framework for collecting together the three essential elements: data, code, and manuscript-quality documentation, in a powerful and feature-rich environment.
+- retrieving template rasters
+- masking rasters with the coastline to exclude sea (or land) cells
 
-Steps to create the template
-----------------------------
+## Planned additions
+### Data
 
-To use this template, I will usually clone this repo and just remove the `.git` record, starting off a new project accordingly. Here I document the steps used to set up this template from scratch, which permits a slightly more modular approach. If this were fully automated it would be preferable to copying, but has not yet reached that stage.
+- altitude data
+- CEH LCM land cover map
+- topographic wetness index
+- soil carbon
 
-The template can be initialized with functions from devtools:
+### Functions
 
-``` r
-devtools::install_github("hadley/devtools")
-library("devtools")
+- colour palette diverging from zero
+
+
+## Examples
+### Install and load
+
+
+```r
+# if not already installed:
+library(devtools)
+install_github("NERC-CEH/spCEH")
 ```
 
-Configure some default options for `devtools`, see `package?devtools`:
 
-``` r
-options(devtools.name = "Carl Boettiger", 
-        devtools.desc.author = "person('Carl', 'Boettiger', email='cboettig@gmail.com', role = c('aut', 'cre'))",
-        devtools.desc.license = "MIT + file LICENSE")
+```r
+library(spCEH)
 ```
 
-Run devtools templating tools
+### `getRasterTemplate`
+Generate a raster grid covering the UK domain at 5-km resolution:
 
-``` r
-setup()
-use_testthat()
-use_vignette("intro")
-use_travis()
-use_package_doc()
-use_cran_comments()
-use_readme_rmd()
+
+```r
+r <- getRasterTemplate(domain = "UK", res = 5000)
+r
 ```
 
-Additional modifications and things not yet automated by `devtools`:
-
--   Add the now-required LICENSE template data
--   add `covr` to the suggests list
-
-``` r
-writeLines(paste("YEAR: ", format(Sys.Date(), "%Y"), "\n", 
-                 "COPYRIGHT HOLDER: ", getOption("devtools.name"), sep=""),
-           con="LICENSE")
-
-use_package("covr", "suggests")
-
-write(
-"
-r_binary_packages:
-  - testthat
-  - knitr
-
-r_github_packages:
-  - jimhester/covr
-
-after_success:
-  - Rscript -e 'library(covr); coveralls()'",
-file=".travis.yml", append=TRUE)
+```
+## class      : RasterLayer 
+## dimensions : 260, 140, 36400  (nrow, ncol, ncell)
+## resolution : 5000, 5000  (x, y)
+## extent     : 0, 7e+05, 0, 1300000  (xmin, xmax, ymin, ymax)
+## crs        : +proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs +towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894
 ```
 
-### Further steps that aren't automated
+### `maskByCountry`
+Mask out cells which are not in England or Wales:
 
-Further steps aren't yet automated in devtools or by me; as it's easier to add these manually to the template and then use the template when starting a new project.
 
--   add the travis shield to README, (as prompted to do by `add_travis()`)
--   Turn on repo at coveralls.io and add the shield to README
--   adding additional dependencies to DESCRIPTION with `use_package`, and also add to `.travis.yml` manually, e.g. under `r_binary_packages:`, `r_github_packages`, or `r_packages`
--   add additional data with `use_data()` or possibly `use_raw_data()` (for scripts that import and clean data first)
+```r
+plot(spgdf_uk)
+r <- getRasterTemplate(domain = "UK", res = 10000)
+r <- setValues(r, 1) # add some dummy values to plot
+r
+```
 
-Manuscript elements
--------------------
+```
+## class      : RasterLayer 
+## dimensions : 130, 70, 9100  (nrow, ncol, ncell)
+## resolution : 10000, 10000  (x, y)
+## extent     : 0, 7e+05, 0, 1300000  (xmin, xmax, ymin, ymax)
+## crs        : +proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs +towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894 
+## source     : memory
+## names      : layer 
+## values     : 1, 1  (min, max)
+```
 
--   Recent developments in `rmarkdown`, `knitr` and `rticles` packages greatly faciliates using vignettes as full manuscripts. The above step adds only a basic HTML templated vignette. This package includes a template for a latex/pdf manuscript using these tools. The actual template appropriate for a project may be better selected from (possibly my fork of) the `rticles` templates.
+```r
+r_masked <- maskByCountry(r, c("England", "Wales"))
+plot(r_masked == 1, add = TRUE)
+```
+
+![](use_spCEH_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+
+You can enable figure captions by `fig_caption: yes` in YAML:
+
+    output:
+      rmarkdown::html_vignette:
+        fig_caption: yes
+
+Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.

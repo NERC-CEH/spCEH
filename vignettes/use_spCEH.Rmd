@@ -1,0 +1,88 @@
+---
+title: "spCEH - spatial utility functions and data from CEH Edinburgh"
+author: "Peter Levy"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+# output:
+  # html_document:
+    # keep_md: yes
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, eval=FALSE, include = FALSE}
+library(rmarkdown)
+system.time(render("use_spCEH.Rmd", output_file = "use_spCEH.html"))
+```
+	
+`spCEH` is an attempt to gather together some common functions and spatial data from CEH Edinburgh.
+The idea is to standardise where possible such things as UK coastline data, topography data, raster grids for the UK (& Scotland, ...).
+We share these in an easily accessible and updateable way by building them into an R package on GitHub. 
+
+## Data
+So far, data sets include:
+
+- UK coastline polygons
+
+
+## Functions
+So far, the package includes functions for:
+
+- retrieving template rasters
+- masking rasters with the coastline to exclude sea (or land) cells
+
+## Planned additions
+### Data
+
+- altitude data
+- CEH LCM land cover map
+- topographic wetness index
+- soil carbon
+
+### Functions
+
+- colour palette diverging from zero
+
+
+## Examples
+### Install and load
+
+```{r, eval = FALSE}
+# if not already installed:
+library(devtools)
+install_github("NERC-CEH/spCEH")
+```
+
+```{r}
+library(spCEH)
+```
+
+### `getRasterTemplate`
+Generate a raster grid covering the UK domain at 5-km resolution:
+
+```{r}
+r <- getRasterTemplate(domain = "UK", res = 5000)
+r
+```
+
+### `maskByCountry`
+Mask out cells which are not in England or Wales:
+
+```{r}
+plot(spgdf_uk)
+r <- getRasterTemplate(domain = "UK", res = 10000)
+r <- setValues(r, 1) # add some dummy values to plot
+r
+r_masked <- maskByCountry(r, c("England", "Wales"))
+plot(r_masked == 1, add = TRUE)
+```
+
+You can enable figure captions by `fig_caption: yes` in YAML:
+
+    output:
+      rmarkdown::html_vignette:
+        fig_caption: yes
+
+Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.

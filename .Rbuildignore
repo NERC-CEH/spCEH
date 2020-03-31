@@ -6,3 +6,6 @@
 ^\.Rproj\.user$
 ^CONTRIBUTING\.md$
 
+^data-raw$
+^doc$
+^Meta$
