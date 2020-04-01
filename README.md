@@ -1,8 +1,7 @@
 ---
 title: "spCEH - spatial utility functions and data from CEH Edinburgh"
 author: "Peter Levy"
-date: "2020-03-31"
-#output: rmarkdown::html_vignette
+date: "2020-04-01"
 output:
   html_document:
     keep_md: yes
@@ -22,6 +21,10 @@ We share these in an easily accessible and updateable way by building them into 
 So far, data sets include:
 
 - UK coastline polygons
+- altitude data
+- CEH LCM land cover map
+- topographic wetness index
+- soil carbon
 
 
 ## Functions
@@ -32,11 +35,8 @@ So far, the package includes functions for:
 
 ## Planned additions
 ### Data
+- mean nitrogen deposition
 
-- altitude data
-- CEH LCM land cover map
-- topographic wetness index
-- soil carbon
 
 ### Functions
 
@@ -103,6 +103,31 @@ plot(r_masked == 1, add = TRUE)
 ```
 
 ![](use_spCEH_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+
+### Load some data
+Data sets included in the package are loaded into memory when needed (LazyData):
+
+
+```r
+r_alt  # and behold, it appears
+```
+
+```
+## class      : RasterLayer 
+## dimensions : 1300, 700, 910000  (nrow, ncol, ncell)
+## resolution : 1000, 1000  (x, y)
+## extent     : 0, 7e+05, 0, 1300000  (xmin, xmax, ymin, ymax)
+## crs        : +proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.1502,0.247,0.8421,-20.4894 +units=m +no_defs 
+## source     : memory
+## names      : r_alt_1km 
+## values     : -3, 1177.413  (min, max)
+```
+
+```r
+plot(r_alt)
+```
+
+![](use_spCEH_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 You can enable figure captions by `fig_caption: yes` in YAML:
 

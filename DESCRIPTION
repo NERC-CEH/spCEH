@@ -1,6 +1,6 @@
 Package: spCEH
 Title: Spatial utility functions and data
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: person("Peter", "Levy", 
                   email = "plevy@ceh.ac.uk", 
                   role = c("aut", "cre", "cph"),
