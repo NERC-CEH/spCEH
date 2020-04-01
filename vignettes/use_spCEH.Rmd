@@ -25,6 +25,10 @@ We share these in an easily accessible and updateable way by building them into 
 So far, data sets include:
 
 - UK coastline polygons
+- altitude data
+- CEH LCM land cover map
+- topographic wetness index
+- soil carbon
 
 
 ## Functions
@@ -35,11 +39,8 @@ So far, the package includes functions for:
 
 ## Planned additions
 ### Data
+- mean nitrogen deposition
 
-- altitude data
-- CEH LCM land cover map
-- topographic wetness index
-- soil carbon
 
 ### Functions
 
@@ -77,6 +78,14 @@ r <- setValues(r, 1) # add some dummy values to plot
 r
 r_masked <- maskByCountry(r, c("England", "Wales"))
 plot(r_masked == 1, add = TRUE)
+```
+
+### Load some data
+Data sets included in the package are loaded into memory when needed (LazyData):
+
+```{r}
+r_alt  # and behold, it appears
+plot(r_alt)
 ```
 
 You can enable figure captions by `fig_caption: yes` in YAML:

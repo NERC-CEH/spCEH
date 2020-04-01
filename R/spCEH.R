@@ -60,6 +60,38 @@ maskByCountry <- function(r, countryName){
 }
 
 
+#' Function to load data distributed with the spCEH package.
+#' Data are retrived from tif files stored in extdata.
+#' getData masks the equivalent function in raster package,
+#' so use raster::getData or spCEH::getData to be explicit.
+#' For small-medium sized files, this function is not necessary;
+#' the four rasters below can be saved as .rda files.
+#' However, this will be needed for anything larger than 100 MB.
+#'
+#' @param name_var A variable name, one of "alt", "Csoil", "lcm", "twi".
+#' @param res Resolution of the raster grid produced. Defaults to 1000 m.  Higher values produce coarser grids by aggregation (e.g. 5000 gives a 5-km grid).
+#' @return A RasterLayer containing the named variable at the specified resolution.
+#' @export
+#' @examples
+#' r_alt <- getData(name_var = "alt", res = 1000)
+getData <- function(name_var = c("alt", "Csoil", "lcm", "twi"), res = 1000){
+  name_var <- match.arg(name_var)
+ 
+  fname <- paste0("r_", name_var, "_1km.tif")
+  fname <- system.file("extdata", fname, package="spCEH")
+  r <- raster(fname)
+  
+  if (res != 1000){  # 1 km is reference value
+    fact = res/1000
+	if (fact != as.integer(fact)){
+	  warning("Resolution not a multiple of 1000, so rounding down.")
+	  fact <- as.integer(fact)
+	}
+    r <- raster::aggregate(r, fact = res/1000)
+  }
+  return(r)
+}
+
 #' CRS object for null projection (longitude-latitude).
 #'
 #' A Coordinate Reference System object
@@ -76,7 +108,6 @@ maskByCountry <- function(r, countryName){
 #' @source \url{https://spatialreference.org/}
 "projOSGB"
 
-
 #' UK coastline
 #'
 #' A SpatialPolygonsDataFrame of the UK coastline and borders
@@ -84,3 +115,35 @@ maskByCountry <- function(r, countryName){
 #' @format A SpatialPolygonsDataFrame object from the sp package
 #' @source \url{https://spatialreference.org/}
 "spgdf_uk"
+
+#' UK altitude
+#'
+#' A raster layer of altitude in the UK
+#'
+#' @format A Raster object from the raster package. Units: metres above mean sea level
+#' @source \url{https://SRTM space shuttle terrain mission I think/}
+"r_alt"
+
+#' UK soil carbon
+#'
+#' A raster layer of soil carbon in the UK
+#'
+#' @format A Raster object from the raster package. Units: kg C / m2
+#' @source \url{https://Bradley et al 2005/}
+"r_Csoil"
+
+#' UK Land Cover Map classes
+#'
+#' A raster layer of UK Land Cover Map classes
+#'
+#' @format A Raster object from the raster package. Units: integers representing land cover classes
+#' @source \url{https://EIDC/}
+"r_lcm"
+
+#' UK Topographic Wetness Index
+#'
+#' A raster layer of Topographic Wetness Index in the UK
+#'
+#' @format A Raster object from the raster package. Units: dimensionless ratio
+#' @source \url{https://Derived from OS DEM data by PL/}
+"r_twi"

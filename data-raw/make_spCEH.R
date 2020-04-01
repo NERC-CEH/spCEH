@@ -3,12 +3,12 @@ library(devtools)
 library(roxygen2)
 
 # quick way of testing pkg functions without building package
-#source("./R/ukghg.R")
+#source("./R/spCEH.R")
 
-#load(file = "ukghg.RData", verbose = TRUE)
+#load(file = "spCEH.RData", verbose = TRUE)
 #nSectors, sectorName, sectorLongName, alpha_year_byGHG_df, mod.yday, alpha_wday_df, mod.hour
 
-#create("ukghg") # if it doesn't already exist
+#create("spCEH") # if it doesn't already exist
 # Add functions in files to R/ directory 
 
 getwd()
@@ -30,7 +30,7 @@ build()
 #Sys.setenv(RD2PDF_INPUTENC = "inputenx ")
 path <- find.package("spCEH")
 system(paste(shQuote(file.path(R.home("bin"), "R")),"CMD", "Rd2pdf", shQuote(path)))
-#C:/PROGRA~1/R/R-32~1.4RE/bin/x64/R R CMD Rd2pdf --no-clean N:/0Peter/prop/UKinverseFlux/GHG_TAP/DelD/anthEmis/ukghg
+#C:/PROGRA~1/R/R-32~1.4RE/bin/x64/R R CMD Rd2pdf --no-clean N:/0Peter/prop/UKinverseFlux/GHG_TAP/DelD/anthEmis/spCEH
 
 
 #  check(manual = FALSE, vignettes = FALSE)
@@ -41,7 +41,7 @@ build(manual = FALSE, vignettes = FALSE)
 build(binary = TRUE)
 
 setwd("..")
-#install("ukghg")
+#install("spCEH")
 # need to install from a tarball for vignettes to be found
 install.packages("./spCEH_0.1.0.tar.gz", repos = NULL, type="source")
 library(spCEH)
