@@ -2,15 +2,27 @@
 # stored in \data, which are built into the package.
 # The contents of \data-raw are ignored when building.
 
+library(sf)
 library(raster)
 setwd("./data-raw")
 
 #Define geographic projections to be used
-# lat / lon 
-projlonlat <- CRS("+proj=longlat +datum=WGS84")
-# OSGB 1936 / British National Grid 
-projOSGB <-  CRS("+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs")
-usethis::use_data(projlonlat, projOSGB, overwrite = TRUE)
+# lon-lat / EPSG:4326
+# alternative specifications
+# projlonlat <- CRS("+proj=longlat +datum=WGS84") # minimal
+# projlonlat <- CRS("+init=epsg:4326")      # from rgdal
+CRS(SRS_string = "EPSG:4326")
+projlonlat <- CRS(st_crs(4326)$proj4string) # from sf
+
+# OSGB 1936 / British National Grid / EPSG:27700
+#projOSGB <-  CRS("+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs")
+CRS(SRS_string = "EPSG:27700")
+projOSGB <-  CRS(st_crs(27700)$proj4string)
+
+# TM75 / Irish Grid / EPSG:29903
+projIre <-  CRS(st_crs(29903)$proj4string)
+
+usethis::use_data(projlonlat, projOSGB, projIre, overwrite = TRUE)
 
 # read uk polygons
 spgdf_uk <- rgdal::readOGR("./uk_countries", "uk_countries")

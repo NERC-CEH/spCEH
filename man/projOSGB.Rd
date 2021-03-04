@@ -14,6 +14,6 @@ A text string
 projOSGB
 }
 \description{
-A Coordinate Reference System object for the Transverse Mercator projection used by the Ordnance Survey in Great Britain (OSGB)
+A Coordinate Reference System object for the Transverse Mercator projection used by the Ordnance Survey in Great Britain (OSGB / EPSG:27700)
 }
 \keyword{datasets}

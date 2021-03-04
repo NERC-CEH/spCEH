@@ -14,6 +14,6 @@ A text string
 projlonlat
 }
 \description{
-A Coordinate Reference System object
+A Coordinate Reference System object for the WGS84 lon-lat coordinate system / EPSG:4326
 }
 \keyword{datasets}

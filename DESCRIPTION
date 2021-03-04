@@ -1,6 +1,6 @@
 Package: spCEH
 Title: Spatial utility functions and data
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: person("Peter", "Levy", 
                   email = "plevy@ceh.ac.uk", 
                   role = c("aut", "cre", "cph"),
@@ -17,5 +17,5 @@ Suggests: testthat,
 VignetteBuilder: knitr
 Imports: 
     rgdal
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 BugReports: https://github.com/NERC-CEH/spCEH/issues

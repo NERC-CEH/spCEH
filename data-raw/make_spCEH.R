@@ -40,12 +40,16 @@ system.time(
 build(manual = FALSE, vignettes = FALSE)
 build(binary = TRUE)
 
+getwd()
 setwd("..")
-#install("spCEH")
+#install("spCEH") # locally
+#install_github("NERC-CEH/spCEH") # direct from GitHub
 # need to install from a tarball for vignettes to be found
-install.packages("./spCEH_0.1.0.tar.gz", repos = NULL, type="source")
+install.packages("C:/Users/plevy/Downloads/spCEH-0.2.2.tar.gz", repos = NULL, type="source")
+install.packages("./spCEH_0.2.2.tar.gz", repos = NULL, type="source")
 library(spCEH)
 packageVersion("spCEH")
 ?spCEH
 ?getRasterTemplate
 ?projOSGB
+r_lcm

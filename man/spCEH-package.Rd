@@ -4,7 +4,7 @@
 \name{spCEH-package}
 \alias{spCEH}
 \alias{spCEH-package}
-\title{Generate maps of GHG fluxes for the UK.}
+\title{Spatial functions and data from CEH.}
 \description{
 spCEH provides spatial utility functions and data.
 }
