@@ -8,20 +8,34 @@
 #' Function to initialise an empty raster for 
 #'   the UK or a sub-region
 #'
-#' @param domain Domain of the output raster: "UK", "Scotland".
+#' @param domain Domain of the output raster: "UK", "Scotland" etc.
 #' @param res Resolution of the output raster in metres.
-#' @param proj Projection of the output raster: "projOSGB" or "projlonlat".
-#' @return An empty raster object covering the UK.
+#' @param crs CRS (coordinate reference system) of the output raster: "crs_OSGB" or "crs_lonlat".
+#' @param proj Projection of the output raster: "projOSGB" or "projlonlat". Deprecated - only used for backwards compatibility.
+#' @return An empty raster object covering the domain.
 #' @export
 #' @examples
+#' r <- getRasterTemplate(domain = "UK", res = 10000, crs = crs_OSGB)
 #' r <- getRasterTemplate(domain = "Scotland", res = 10000)
 #' r <- getRasterTemplate(domain = "NT_10km", res = 100)
 #' r <- getRasterTemplate(domain = "UK", res = 10000, proj = projOSGB)
 #' r <- getRasterTemplate(domain = "UK", res = 0.1, proj = projlonlat)
 #' r <- getRasterTemplate(domain = "UK_NAME", proj = projlonlat)
-getRasterTemplate <- function(domain = "UK", res = 100, proj = projOSGB){
+#' r <- getRasterTemplate(domain = "UK_NAME", crs = crs_lonlat)
+getRasterTemplate <- function(domain = "UK", res = 100, crs = NULL, proj = NULL){
+  if (is.null(crs) & is.null(proj)) stop("Either crs or proj4 string must be specified.")
+  
+  if (is.null(crs)){
+    # for back-compatability, if crs not supplied, take a proj4 string instead
+    crs <- proj
+  } else {
+    # get the proj4 string as a means to identify the projection
+    # could just pass a projection name code, or EPSG code
+    proj <- crs@projargs
+  } 
   # OSGB 1936 / British National Grid 
   #proj <- "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs"
+  # this is clumsy - replace with EPSG code in future version
   if (substr(proj, 20, 21) == "49"){  # then it is OSGB
     if (domain == "UK"){xmin <- 0; xmax <- 700000; ymin <- 0; ymax <- 1300000}
     if (domain == "Scotland"){xmin <- 0; xmax <- 500000; ymin <- 500000; ymax <- 1300000}
@@ -45,10 +59,12 @@ getRasterTemplate <- function(domain = "UK", res = 100, proj = projOSGB){
   ext <- extent(xmin, xmax, ymin, ymax)
 
   ## S4 method for signature 'Extent'
-  r <- raster(ext, resolution = res, crs = proj)
+  r <- raster(ext, resolution = res, crs = crs)
+  #cat(wkt(r),"\n") 
+  
   if (domain == "UK_NAME"){
     res_x <- 0.01408; res_y <- 0.00936 # dx=0.352/25; dy=0.234/25
-    r <- raster(ext, resolution = c(res_x, res_y), crs = proj)
+    r <- raster(ext, resolution = c(res_x, res_y), crs = crs)
   }
   return(r)
 }
@@ -89,8 +105,8 @@ maskByCountry <- function(r, countryName){
 #' @param res Resolution of the raster grid produced. Defaults to 1000 m.  Higher values produce coarser grids by aggregation (e.g. 5000 gives a 5-km grid).
 #' @return A RasterLayer containing the named variable at the specified resolution.
 #' @export
-#' # @examples
-#' # r_alt <- getData(name_var = "alt", res = 1000)
+# #' @examples
+# #' r_alt <- getData(name_var = "alt", res = 1000)
 getData <- function(name_var = c("alt", "Csoil", "lcm", "twi"), res = 1000){
   name_var <- match.arg(name_var)
  
@@ -108,6 +124,30 @@ getData <- function(name_var = c("alt", "Csoil", "lcm", "twi"), res = 1000){
   }
   return(r)
 }
+
+#' CRS object for null projection (longitude-latitude).
+#'
+#' A Coordinate Reference System object for the WGS84 lon-lat coordinate system / EPSG:4326
+#'
+#' @format An sp CRS object
+#' @source \url{https://spatialreference.org/}
+"crs_lonlat"
+
+#' CRS object for the OSGB projection.
+#'
+#' A Coordinate Reference System object for the Transverse Mercator projection used by the Ordnance Survey in Great Britain (OSGB / EPSG:27700)
+#'
+#' @format An sp CRS object
+#' @source \url{https://spatialreference.org/}
+"crs_OSGB"
+
+#' CRS object for the TM75 Irish Grid projection.
+#'
+#' A Coordinate Reference System object for the Transverse Mercator projection used by the Ordnance Survey in Ireland (TM75 / EPSG:29903)
+#'
+#' @format An sp CRS object
+#' @source \url{https://spatialreference.org/}
+"crs_Ire"
 
 #' CRS object for null projection (longitude-latitude).
 #'

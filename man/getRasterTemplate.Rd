@@ -5,26 +5,30 @@
 \title{Function to initialise an empty raster for 
   the UK or a sub-region}
 \usage{
-getRasterTemplate(domain = "UK", res = 100, proj = projOSGB)
+getRasterTemplate(domain = "UK", res = 100, crs = NULL, proj = NULL)
 }
 \arguments{
-\item{domain}{Domain of the output raster: "UK", "Scotland".}
+\item{domain}{Domain of the output raster: "UK", "Scotland" etc.}
 
 \item{res}{Resolution of the output raster in metres.}
 
-\item{proj}{Projection of the output raster: "projOSGB" or "projlonlat".}
+\item{crs}{CRS (coordinate reference system) of the output raster: "crs_OSGB" or "crs_lonlat".}
+
+\item{proj}{Projection of the output raster: "projOSGB" or "projlonlat". Deprecated - only used for backwards compatibility.}
 }
 \value{
-An empty raster object covering the UK.
+An empty raster object covering the domain.
 }
 \description{
 Function to initialise an empty raster for 
   the UK or a sub-region
 }
 \examples{
+r <- getRasterTemplate(domain = "UK", res = 10000, crs = crs_OSGB)
 r <- getRasterTemplate(domain = "Scotland", res = 10000)
 r <- getRasterTemplate(domain = "NT_10km", res = 100)
 r <- getRasterTemplate(domain = "UK", res = 10000, proj = projOSGB)
 r <- getRasterTemplate(domain = "UK", res = 0.1, proj = projlonlat)
 r <- getRasterTemplate(domain = "UK_NAME", proj = projlonlat)
+r <- getRasterTemplate(domain = "UK_NAME", crs = crs_lonlat)
 }

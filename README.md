@@ -1,7 +1,7 @@
 ---
 title: "spCEH - spatial utility functions and data from CEH Edinburgh"
 author: "Peter Levy"
-date: "2020-04-01"
+date: "2021-08-30"
 output:
   html_document:
     keep_md: yes
@@ -63,7 +63,7 @@ Generate a raster grid covering the UK domain at 5-km resolution:
 
 
 ```r
-r <- getRasterTemplate(domain = "UK", res = 5000)
+r <- getRasterTemplate(domain = "UK", res = 5000, crs = crs_OSGB)
 r
 ```
 
@@ -81,7 +81,7 @@ Mask out cells which are not in England or Wales:
 
 ```r
 plot(spgdf_uk)
-r <- getRasterTemplate(domain = "UK", res = 10000)
+r <- getRasterTemplate(domain = "UK", res = 10000, crs = crs_OSGB)
 r <- setValues(r, 1) # add some dummy values to plot
 r
 ```

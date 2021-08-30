@@ -11,22 +11,30 @@ setwd("./data-raw")
 # alternative specifications
 # projlonlat <- CRS("+proj=longlat +datum=WGS84") # minimal
 # projlonlat <- CRS("+init=epsg:4326")      # from rgdal
-CRS(SRS_string = "EPSG:4326")
-projlonlat <- CRS(st_crs(4326)$proj4string) # from sf
+crs_lonlat <- CRS(SRS_string = "EPSG:4326") # an sp CRS object
+projlonlat <- CRS(crs_lonlat@projargs) # a proj4 string
+#cat(wkt(projlonlat),"\n")
+
 
 # OSGB 1936 / British National Grid / EPSG:27700
 #projOSGB <-  CRS("+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs")
-CRS(SRS_string = "EPSG:27700")
-projOSGB <-  CRS(st_crs(27700)$proj4string)
+crs_OSGB <- CRS(SRS_string = "EPSG:27700")  # a CRS object
+projOSGB <- CRS(crs_OSGB@projargs)          # a CRS from the proj4 string
 
 # TM75 / Irish Grid / EPSG:29903
-projIre <-  CRS(st_crs(29903)$proj4string)
+crs_Ire <- CRS(SRS_string = "EPSG:29903")  # an sp CRS object
+projIre <- CRS(crs_Ire@projargs)          # a CRS from the proj4 string
 
 usethis::use_data(projlonlat, projOSGB, projIre, overwrite = TRUE)
+usethis::use_data(crs_lonlat, crs_OSGB, crs_Ire, overwrite = TRUE)
 
 # read uk polygons
 spgdf_uk <- rgdal::readOGR("./uk_countries", "uk_countries")
-projection(spgdf_uk) <- projection(projOSGB)
+#projection(spgdf_uk) <- projection(projOSGB)
+#CRS(spgdf_uk) <- projection(projOSGB)
+proj4string(spgdf_uk) <- crs_OSGB
+#cat(wkt(spgdf_uk),"\n")
+
 usethis::use_data(spgdf_uk, overwrite = TRUE)
 
 # pre-existing raster format data
@@ -34,6 +42,12 @@ r_alt   <- raster("r_alt_1km.tif")
 r_Csoil <- raster("r_Csoil_1km.tif")
 r_lcm   <- raster("r_lcm_1km.tif")
 r_twi   <- raster("r_twi_1km.tif")
+
+crs(r_alt) <- crs_OSGB
+crs(r_Csoil) <- crs_OSGB
+crs(r_lcm) <- crs_OSGB
+crs(r_twi) <- crs_OSGB
+cat(wkt(r_twi),"\n")
 
 canProcessInMemory(r_Csoil, n=4, verbose=TRUE)
 

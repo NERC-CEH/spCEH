@@ -3,5 +3,5 @@
 .RData
 inst/doc
 vignettes/*_cache/
-doc
-Meta
+/doc/
+/Meta/
