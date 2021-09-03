@@ -48,9 +48,9 @@ So far, the package includes functions for:
 
 
 ```r
-# if not already installed:
-library(devtools)
-install_github("NERC-CEH/spCEH")
+# if not already installed, install "remotes" package:
+# install.packages("remotes")
+remotes::install_github("NERC-CEH/spCEH")
 ```
 
 
