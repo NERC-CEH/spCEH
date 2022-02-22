@@ -25,10 +25,10 @@ Function to initialise an empty raster for
 }
 \examples{
 r <- getRasterTemplate(domain = "UK", res = 10000, crs = crs_OSGB)
-r <- getRasterTemplate(domain = "Scotland", res = 10000)
-r <- getRasterTemplate(domain = "NT_10km", res = 100)
-r <- getRasterTemplate(domain = "UK", res = 10000, proj = projOSGB)
-r <- getRasterTemplate(domain = "UK", res = 0.1, proj = projlonlat)
-r <- getRasterTemplate(domain = "UK_NAME", proj = projlonlat)
+r <- getRasterTemplate(domain = "Scotland", res = 10000, crs = crs_OSGB)
+r <- getRasterTemplate(domain = "NT_10km", res = 100, crs = crs_OSGB)
+r <- getRasterTemplate(domain = "UK", res = 10000, crs = crs_OSGB)
+r <- getRasterTemplate(domain = "UK", res = 0.1, crs = crs_lonlat)
+r <- getRasterTemplate(domain = "UK_NAME", crs = crs_lonlat)
 r <- getRasterTemplate(domain = "UK_NAME", crs = crs_lonlat)
 }

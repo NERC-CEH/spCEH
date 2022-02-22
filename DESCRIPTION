@@ -12,10 +12,10 @@ Depends:
 License: MIT + file LICENSE
 LazyData: true
 Suggests: testthat,
-    knitr,
+    knitr, rmarkdown,
     covr
-VignetteBuilder: knitr
+VignetteBuilder: knitr, rmarkdown
 Imports: 
     rgdal
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 BugReports: https://github.com/NERC-CEH/spCEH/issues

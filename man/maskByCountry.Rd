@@ -18,6 +18,6 @@ A RasterLayer masked to the named country.
 Function to mask out cells outwith polygons defining a country within the UK
 }
 \examples{
-r <- getRasterTemplate(domain = "UK", res = 10000)
+r <- getRasterTemplate(domain = "UK", res = 10000, crs = crs_OSGB)
 r_masked <- maskByCountry(r, c("England", "Wales"))
 }

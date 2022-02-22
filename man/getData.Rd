@@ -29,6 +29,3 @@ For small-medium sized files, this function is not necessary;
 the four rasters below can be saved as .rda files.
 However, this will be needed for anything larger than 100 MB.
 }
-\examples{
-r_alt <- getData(name_var = "alt", res = 1000)
-}

@@ -11,6 +11,9 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/NERC-CEH/spCEH/workflows/R-CMD-check/badge.svg)](https://github.com/NERC-CEH/spCEH/actions)
+<!-- badges: end -->
 
 	
 `spCEH` is an attempt to gather together some common functions and spatial data from CEH Edinburgh.

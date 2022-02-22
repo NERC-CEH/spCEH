@@ -1,13 +1,13 @@
 ---
 title: "spCEH - spatial utility functions and data from CEH Edinburgh"
 author: "Peter Levy"
-date: "`r Sys.Date()`"
+date: 2022-02-22
 output: rmarkdown::html_vignette
 # output:
   # html_document:
     # keep_md: yes
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{spCEH - spatial utility functions and data from CEH Edinburgh}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
