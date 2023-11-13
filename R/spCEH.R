@@ -5,6 +5,9 @@
 "_PACKAGE"
 #> [1] "_PACKAGE"
 
+#' @import terra sf
+NULL
+
 #' Function to initialise an empty SpatRaster for
 #'   the UK or a sub-region
 #'
