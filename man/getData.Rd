@@ -18,7 +18,7 @@ getData(name_var = c("alt", "Csoil", "lcm", "twi"), res = 1000)
 \item{res}{Resolution of the raster grid produced. Defaults to 1000 m.  Higher values produce coarser grids by aggregation (e.g. 5000 gives a 5-km grid).}
 }
 \value{
-A RasterLayer containing the named variable at the specified resolution.
+A SpatRasterLayer containing the named variable at the specified resolution.
 }
 \description{
 Function to load data distributed with the spCEH package.

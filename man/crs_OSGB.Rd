@@ -5,7 +5,7 @@
 \alias{crs_OSGB}
 \title{CRS object for the OSGB projection.}
 \format{
-An sp CRS object
+A terra CRS object
 }
 \source{
 \url{https://spatialreference.org/}

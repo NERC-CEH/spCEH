@@ -8,7 +8,8 @@ Authors@R: person("Peter", "Levy",
 Description: Generically useful utility functions and data used at CEH Edinburgh for spatial work.  
 Depends:
     R (>= 3.2.0),
-    raster
+    terra,
+    sf
 License: MIT + file LICENSE
 LazyData: true
 Suggests: testthat,
@@ -16,6 +17,5 @@ Suggests: testthat,
     covr
 VignetteBuilder: knitr, rmarkdown
 Imports: 
-    rgdal
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 BugReports: https://github.com/NERC-CEH/spCEH/issues

@@ -5,7 +5,7 @@
 \alias{crs_Ire}
 \title{CRS object for the TM75 Irish Grid projection.}
 \format{
-An sp CRS object
+A terra CRS object
 }
 \source{
 \url{https://spatialreference.org/}

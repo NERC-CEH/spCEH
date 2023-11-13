@@ -56,15 +56,22 @@ library(devtools)
 install_github("NERC-CEH/spCEH")
 ```
 
-```{r}
+```{r, eval = F}
 library(spCEH)
 ```
 
-### `getRasterTemplate`
+```{r, include = F, eval = T}
+# source('./../R/spCEH.R')
+# library(sf)
+# library(terra)
+devtools::load_all()
+```
+
+### `getSpatRasterTemplate`
 Generate a raster grid covering the UK domain at 5-km resolution:
 
 ```{r}
-r <- getRasterTemplate(domain = "UK", res = 5000, crs = crs_OSGB)
+r <- getSpatRasterTemplate(domain = "UK", res = 5000, proj = 'OSGB')
 r
 ```
 
@@ -72,11 +79,14 @@ r
 Mask out cells which are not in England or Wales:
 
 ```{r}
-plot(spgdf_uk)
-r <- getRasterTemplate(domain = "UK", res = 10000, crs = crs_OSGB)
+plot(st_geometry(spgdf_uk))
+# or
+plot(st_geometry(sfdf_uk))
+r <- getSpatRasterTemplate(domain = "UK", res = 10000, proj = 'OSGB')
 r <- setValues(r, 1) # add some dummy values to plot
 r
 r_masked <- maskByCountry(r, c("England", "Wales"))
+plot(st_geometry(spgdf_uk))
 plot(r_masked == 1, add = TRUE)
 ```
 
@@ -84,7 +94,7 @@ plot(r_masked == 1, add = TRUE)
 Data sets included in the package are loaded into memory when needed (LazyData):
 
 ```{r}
-r_alt  # and behold, it appears
+r_alt <- get_r_alt()  # and behold, it appears
 plot(r_alt)
 ```
 
