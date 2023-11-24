@@ -9,7 +9,7 @@ library(roxygen2)
 #nSectors, sectorName, sectorLongName, alpha_year_byGHG_df, mod.yday, alpha_wday_df, mod.hour
 
 #create("spCEH") # if it doesn't already exist
-# Add functions in files to R/ directory 
+# Add functions in files to R/ directory
 
 getwd()
 #setwd("./spCEH")

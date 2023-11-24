@@ -1,6 +1,6 @@
 Package: spCEH
 Title: Spatial utility functions and data
-Version: 0.3
+Version: 0.4
 Authors@R: person("Peter", "Levy", 
                   email = "plevy@ceh.ac.uk", 
                   role = c("aut", "cre", "cph"),
@@ -8,14 +8,16 @@ Authors@R: person("Peter", "Levy",
 Description: Generically useful utility functions and data used at CEH Edinburgh for spatial work.  
 Depends:
     R (>= 3.2.0),
-    raster
+    terra, 
+    sf
 License: MIT + file LICENSE
 LazyData: true
 Suggests: testthat,
     knitr, rmarkdown,
     covr
 VignetteBuilder: knitr, rmarkdown
-Imports: 
-    rgdal
-RoxygenNote: 7.1.2
+Imports:  
+    terra, 
+    sf
+RoxygenNote: 7.2.3
 BugReports: https://github.com/NERC-CEH/spCEH/issues

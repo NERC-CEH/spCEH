@@ -5,7 +5,7 @@
 \alias{crs_lonlat}
 \title{CRS object for null projection (longitude-latitude).}
 \format{
-An sp CRS object
+A terra CRS object
 }
 \source{
 \url{https://spatialreference.org/}

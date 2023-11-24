@@ -1,9 +1,9 @@
-# This script is run to process raw data to create data objects 
+# This script is run to process raw data to create data objects
 # stored in \data, which are built into the package.
 # The contents of \data-raw are ignored when building.
 
 library(sf)
-library(raster)
+library(terra)
 setwd("./data-raw")
 
 #Define geographic projections to be used
@@ -11,65 +11,58 @@ setwd("./data-raw")
 # alternative specifications
 # projlonlat <- CRS("+proj=longlat +datum=WGS84") # minimal
 # projlonlat <- CRS("+init=epsg:4326")      # from rgdal
-crs_lonlat <- CRS(SRS_string = "EPSG:4326") # an sp CRS object
-projlonlat <- CRS(crs_lonlat@projargs) # a proj4 string
+crs_lonlat <- crs('epsg:4326') # a terra CRS object
+projlonlat <- crs('epsg:4326', proj = T) # a proj4 string for backwards compatability.
 #cat(wkt(projlonlat),"\n")
-
 
 # OSGB 1936 / British National Grid / EPSG:27700
 #projOSGB <-  CRS("+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs")
-crs_OSGB <- CRS(SRS_string = "EPSG:27700")  # a CRS object
-projOSGB <- CRS(crs_OSGB@projargs)          # a CRS from the proj4 string
+crs_OSGB <- crs("EPSG:27700")  # a terra crs object
+projOSGB <- crs("EPSG:27700", proj = T)  # a proj4 string for backwards compatability.
 
 # TM75 / Irish Grid / EPSG:29903
-crs_Ire <- CRS(SRS_string = "EPSG:29903")  # an sp CRS object
-projIre <- CRS(crs_Ire@projargs)          # a CRS from the proj4 string
+crs_Ire <- crs("EPSG:29903")  # an terra crs object
+projIre <- crs("EPSG:29903", proj = T) # a CRS from the proj4 string
 
 usethis::use_data(projlonlat, projOSGB, projIre, overwrite = TRUE)
 usethis::use_data(crs_lonlat, crs_OSGB, crs_Ire, overwrite = TRUE)
 
 # read uk polygons
-spgdf_uk <- rgdal::readOGR("./uk_countries", "uk_countries")
+sfdf_uk <- sf::st_read("./uk_countries", "uk_countries")
 #projection(spgdf_uk) <- projection(projOSGB)
 #CRS(spgdf_uk) <- projection(projOSGB)
-proj4string(spgdf_uk) <- crs_OSGB
+st_crs(sfdf_uk) <- crs_OSGB
 #cat(wkt(spgdf_uk),"\n")
 
-usethis::use_data(spgdf_uk, overwrite = TRUE)
+spgdf_uk <- sfdf_uk # for backwards comparability
 
-# pre-existing raster format data
-r_alt   <- raster("r_alt_1km.tif")
-r_Csoil <- raster("r_Csoil_1km.tif")
-r_lcm   <- raster("r_lcm_1km.tif")
-r_twi   <- raster("r_twi_1km.tif")
+usethis::use_data(sfdf_uk, spgdf_uk, overwrite = TRUE)
 
-crs(r_alt) <- crs_OSGB
-crs(r_Csoil) <- crs_OSGB
-crs(r_lcm) <- crs_OSGB
-crs(r_twi) <- crs_OSGB
-cat(wkt(r_twi),"\n")
-
-canProcessInMemory(r_Csoil, n=4, verbose=TRUE)
-
-r_alt   <- readAll(r_alt)
-r_Csoil <- readAll(r_Csoil)
-r_lcm   <- readAll(r_lcm)
-r_twi   <- readAll(r_twi)
-
-inMemory(r_alt  )
-inMemory(r_Csoil)
-inMemory(r_lcm  )
-inMemory(r_twi  )
-
-# seems to work so long as in memory
-# but we have to force it there with readAll
-usethis::use_data(r_alt, r_Csoil, 
-  r_lcm, r_twi, overwrite = TRUE)
+# # pre-existing raster format data
+# r_alt   <- rast("r_alt_1km.tif")
+# r_Csoil <- rast("r_Csoil_1km.tif")
+# r_lcm   <- rast("r_lcm_1km.tif")
+# r_twi   <- rast("r_twi_1km.tif")
+#
+# crs(r_alt) <- crs_OSGB
+# crs(r_Csoil) <- crs_OSGB
+# crs(r_lcm) <- crs_OSGB
+# crs(r_twi) <- crs_OSGB
+#
+# r_alt <- wrap(r_alt)
+# r_Csoil <- wrap(r_Csoil)
+# r_lcm <- wrap(r_lcm)
+# r_twi <- wrap(r_twi)
+#
+# # seems to work so long as in memory
+# # but we have to force it there with readAll
+# usethis::use_data(r_alt, r_Csoil,
+#   r_lcm, r_twi, overwrite = TRUE)
 
 # For testing:
 # rm(r_twi)
 # load("../data/r_twi.rda", verbose = TRUE)
-# plot(r_twi)
+# plot(terra::unwrap(r_twi))
 
 setwd("..")
 

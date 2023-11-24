@@ -61,21 +61,21 @@ remotes::install_github("NERC-CEH/spCEH")
 library(spCEH)
 ```
 
-### `getRasterTemplate`
+### `getSpatRasterTemplate`
 Generate a raster grid covering the UK domain at 5-km resolution:
 
 
 ```r
-r <- getRasterTemplate(domain = "UK", res = 5000, crs = crs_OSGB)
+r <- getSpatRasterTemplate(domain = "UK", res = 5000, proj = 'OSGB')
 r
 ```
 
 ```
-## class      : RasterLayer 
-## dimensions : 260, 140, 36400  (nrow, ncol, ncell)
-## resolution : 5000, 5000  (x, y)
-## extent     : 0, 7e+05, 0, 1300000  (xmin, xmax, ymin, ymax)
-## crs        : +proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs +towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894
+## class       : SpatRaster 
+## dimensions  : 260, 140, 1  (nrow, ncol, nlyr)
+## resolution  : 5000, 5000  (x, y)
+## extent      : 0, 7e+05, 0, 1300000  (xmin, xmax, ymin, ymax)
+## coord. ref. : OSGB36 / British National Grid (EPSG:27700) 
 ```
 
 ### `maskByCountry`
@@ -83,21 +83,22 @@ Mask out cells which are not in England or Wales:
 
 
 ```r
-plot(spgdf_uk)
-r <- getRasterTemplate(domain = "UK", res = 10000, crs = crs_OSGB)
+plot(st_geometry(sfdf_uk))
+r <- getSpatRasterTemplate(domain = "UK", res = 10000, proj = 'OSGB')
 r <- setValues(r, 1) # add some dummy values to plot
 r
 ```
 
 ```
-## class      : RasterLayer 
-## dimensions : 130, 70, 9100  (nrow, ncol, ncell)
-## resolution : 10000, 10000  (x, y)
-## extent     : 0, 7e+05, 0, 1300000  (xmin, xmax, ymin, ymax)
-## crs        : +proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs +towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894 
-## source     : memory
-## names      : layer 
-## values     : 1, 1  (min, max)
+## class       : SpatRaster 
+## dimensions  : 130, 70, 1  (nrow, ncol, nlyr)
+## resolution  : 10000, 10000  (x, y)
+## extent      : 0, 7e+05, 0, 1300000  (xmin, xmax, ymin, ymax)
+## coord. ref. : OSGB36 / British National Grid (EPSG:27700) 
+## source(s)   : memory
+## name        : lyr.1 
+## min value   :     1 
+## max value   :     1 
 ```
 
 ```r
@@ -112,22 +113,23 @@ Data sets included in the package are loaded into memory when needed (LazyData):
 
 
 ```r
-r_alt  # and behold, it appears
+get_r_alt()  # and behold, it appears
 ```
 
 ```
-## class      : RasterLayer 
-## dimensions : 1300, 700, 910000  (nrow, ncol, ncell)
-## resolution : 1000, 1000  (x, y)
-## extent     : 0, 7e+05, 0, 1300000  (xmin, xmax, ymin, ymax)
-## crs        : +proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.1502,0.247,0.8421,-20.4894 +units=m +no_defs 
-## source     : memory
-## names      : r_alt_1km 
-## values     : -3, 1177.413  (min, max)
+## class       : SpatRaster 
+## dimensions  : 1300, 700, 1  (nrow, ncol, nlyr)
+## resolution  : 1000, 1000  (x, y)
+## extent      : 0, 7e+05, 0, 1300000  (xmin, xmax, ymin, ymax)
+## coord. ref. : OSGB36 / British National Grid (EPSG:27700) 
+## source      : r_alt_1km.tif 
+## name        : r_alt_1km 
+## min value   :    -3.000 
+## max value   :  1177.413 
 ```
 
 ```r
-plot(r_alt)
+plot(get_r_alt())
 ```
 
 ![](use_spCEH_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
