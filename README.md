@@ -131,13 +131,3 @@ get_r_alt()  # and behold, it appears
 ```r
 plot(get_r_alt())
 ```
-
-![](use_spCEH_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
-
-You can enable figure captions by `fig_caption: yes` in YAML:
-
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
