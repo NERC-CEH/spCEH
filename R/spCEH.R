@@ -61,6 +61,20 @@ getSpatRasterTemplate <- function(domain = "UK", res = 100, proj = NULL){
   return(r)
 }
 
+#' Alternatively-named function to initialise an empty SpatRaster for
+#'   the UK or a sub-region, with original name for back-compatability
+#'
+#' @param domain Domain of the output raster: "UK", "Scotland" etc.
+#' @param res Resolution of the output raster in metres (for OSGB) or decimal degrees (WGS84). For the 'UK_NAME' domain, the res is pre-specified.
+#' @param proj CRS (coordinate reference system) of the output raster: "OSGB" or "WGS84".
+#' @return An empty SpatRaster (from the terra package) object covering the domain.
+#' @export
+#' @examples
+#' r <- getRasterTemplate(domain = "UK", res = 10000, proj = 'OSGB')
+getRasterTemplate <- function(domain = "UK", res = 100, proj = NULL) {
+  r <- getSpatRasterTemplate(domain = domain, res = res, proj = proj)
+  return(r)
+}
 
 #' Function to mask out cells outwith polygons defining a country within the UK
 #'
