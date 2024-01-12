@@ -48,10 +48,11 @@ detach("package:spCEH", unload=TRUE)
 #install_github("NERC-CEH/spCEH") # direct from GitHub
 # need to install from a tarball for vignettes to be found
 install.packages("C:/Users/plevy/Downloads/spCEH-0.2.2.tar.gz", repos = NULL, type="source")
-install.packages("./spCEH_0.3.tar.gz", repos = NULL, type="source")
+install.packages("./spCEH_0.4.1.tar.gz", repos = NULL, type="source")
 library(spCEH)
 packageVersion("spCEH")
 ?spCEH
 ?getRasterTemplate
 ?projOSGB
 r_lcm
+r <- getRasterTemplate(domain = "UK", res = 10000, proj = 'OSGB')
