@@ -13,8 +13,8 @@ A SpatRaster object from the terra package. Units: kg C / m2. CRS: EPSG 27700 (B
 get_r_Csoil()
 }
 \description{
-A raster layer of soil carbon in the UK
+A raster layer of soil carbon in the UK. Object 'r_Csoil' returned to global environment.
 }
 \examples{
-r_Csoil <- get_r_Csoil()
+get_r_Csoil()
 }

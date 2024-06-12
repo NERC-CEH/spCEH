@@ -13,8 +13,8 @@ A SpatRaster object from the terra package. Units: dimensionless ratio. CRS: EPS
 get_r_twi()
 }
 \description{
-A raster layer of Topographic Wetness Index in the UK.
+A raster layer of Topographic Wetness Index in the UK. Object 'r_twi' returned to global environment.
 }
 \examples{
-r_twi <- get_r_twi()
+get_r_twi()
 }

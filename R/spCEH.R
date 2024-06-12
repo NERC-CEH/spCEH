@@ -193,66 +193,66 @@ getData <- function(name_var = c("alt", "Csoil", "lcm", "twi"), res = 1000){
 
 #' Function to export UK altitude
 #'
-#' A raster layer of altitude in the UK
+#' A raster layer of altitude in the UK. Object 'r_alt' returned to global environment.
 #'
 #' @format A SpatRaster (Raster) object from the terra package. Units: metres above mean sea level. CRS: EPSG 27700 (British National Grid)
 #' @source \url{https://SRTM space shuttle terrain mission I think/}
 #' @export
 #' @examples
-#' r_alt <- get_r_alt()
+#' get_r_alt()
 get_r_alt <- function(){
   file_path <- system.file("extdata", "r_alt_1km.tif", package="spCEH")
   r <- rast(file_path)
   crs(r) <- 'EPSG:27700'
-  return(r)
+  assign('r_alt', r, envir=globalenv())
 }
 
 #' Function to export UK soil carbon
 #'
-#' A raster layer of soil carbon in the UK
+#' A raster layer of soil carbon in the UK. Object 'r_Csoil' returned to global environment.
 #'
 #' @format A SpatRaster object from the terra package. Units: kg C / m2. CRS: EPSG 27700 (British National Grid)
 #' @source \url{https://Bradley et al 2005/}
 #' @export
 #' @examples
-#' r_Csoil <- get_r_Csoil()
+#' get_r_Csoil()
 get_r_Csoil <- function(){
   file_path <- system.file("extdata", "r_Csoil_1km.tif", package="spCEH")
   r <- rast(file_path)
   crs(r) <- 'EPSG:27700'
-  return(r)
+  assign('r_Csoil', r, envir=globalenv())
 }
 
 #' Function to export UK Land Cover Map classes
 #'
-#' A raster layer of UK Land Cover Map classes.
+#' A raster layer of UK Land Cover Map classes. Object 'r_lcm' returned to global environment.
 #'
 #' @format A SpatRaster object from the terra package. Units: integers representing land cover classes. CRS: EPSG 27700 (British National Grid)
 #' @source \url{https://EIDC/}
 #' @export
 #' @examples
-#' r_lcm <- get_r_lcm()
+#' get_r_lcm()
 get_r_lcm <- function(){
   file_path <- system.file("extdata", "r_lcm_1km.tif", package="spCEH")
   r <- rast(file_path)
   crs(r) <- 'EPSG:27700'
-  return(r)
+  assign('r_lcm', r, envir=globalenv())
 }
 
 
 #' Function to export UK Topographic Wetness Index
 #'
-#' A raster layer of Topographic Wetness Index in the UK.
+#' A raster layer of Topographic Wetness Index in the UK. Object 'r_twi' returned to global environment.
 #'
 #' @format A SpatRaster object from the terra package. Units: dimensionless ratio. CRS: EPSG 27700 (British National Grid)
 #' @source \url{https://Derived from OS DEM data by PL/}
 #' @export
 #' @examples
-#' r_twi <- get_r_twi()
+#' get_r_twi()
+
 get_r_twi <- function(){
   file_path <- system.file("extdata", "r_twi_1km.tif", package="spCEH")
   r <- rast(file_path)
   crs(r) <- 'EPSG:27700'
-  return(r)
+  assign('r_twi', r, envir=globalenv())
 }
-

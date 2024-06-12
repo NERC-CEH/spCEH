@@ -16,8 +16,8 @@ Suggests: testthat,
     knitr, rmarkdown,
     covr
 VignetteBuilder: knitr, rmarkdown
-Imports:  
+Imports: 
     terra, 
     sf
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 BugReports: https://github.com/NERC-CEH/spCEH/issues

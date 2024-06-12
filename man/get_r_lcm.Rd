@@ -13,8 +13,8 @@ A SpatRaster object from the terra package. Units: integers representing land co
 get_r_lcm()
 }
 \description{
-A raster layer of UK Land Cover Map classes.
+A raster layer of UK Land Cover Map classes. Object 'r_lcm' returned to global environment.
 }
 \examples{
-r_lcm <- get_r_lcm()
+get_r_lcm()
 }

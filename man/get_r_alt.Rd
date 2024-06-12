@@ -13,8 +13,8 @@ A SpatRaster (Raster) object from the terra package. Units: metres above mean se
 get_r_alt()
 }
 \description{
-A raster layer of altitude in the UK
+A raster layer of altitude in the UK. Object 'r_alt' returned to global environment.
 }
 \examples{
-r_alt <- get_r_alt()
+get_r_alt()
 }
